@@ -49,26 +49,24 @@ export function TodoTable() {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [selectedTodo, setSelectedTodo] = useState<ISelectedState>(null)
 
-
     const {
         register,
         handleSubmit,
         formState: { errors },
-        reset,
+        setValue,
     } = useForm<TodoFormValues>({
         resolver: zodResolver(todoSchema),
     })
 
-
-    let id = invoices.length +1
     const onSubmit = (data: TodoFormValues) => {
-
-        dispatch(todoActions.addTodo({id, ...data}))
+        dispatch(todoActions.editTodo({id: selectedTodo.id, ...data}))
         setIsDialogOpen(false)
-        reset()
     }
-    const handleRowClick = (invoice) => {
+    const handleRowClick = (invoice: ISelectedState) => {
         setSelectedTodo(invoice)
+        setValue("name", invoice.name)
+        setValue("description", invoice.description)
+        setValue("status", invoice.status)
         setIsDialogOpen(true)
     }
 
@@ -92,7 +90,7 @@ export function TodoTable() {
                                     {invoice.status && <Check></Check>}
                                 </div>
                             </TableCell>
-                            <TableCell onClick={() => handleRowClick(invoice)} >Change</TableCell>
+                            <TableCell onClick={() => handleRowClick(invoice)}>Change</TableCell>
                             <TableCell className="text-right w-10 text-gray-700"><Trash2 className={'w-5 z-10'}
                             onClick={() => dispatch(todoActions.deleteTodo(invoice.id))}/></TableCell>
                         </TableRow>
@@ -118,7 +116,6 @@ export function TodoTable() {
                                 id="name"
                                 {...register("name")}
                                 className="col-span-3"
-                                error={errors.name?.message}
                             />
                             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                         </div>
@@ -131,7 +128,6 @@ export function TodoTable() {
                                 id="description"
                                 {...register("description")}
                                 className="col-span-3"
-                                error={errors.description?.message}
                             />
                             {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
                         </div>
@@ -140,7 +136,7 @@ export function TodoTable() {
                             <Label htmlFor="status" className="text-right">
                                 Status
                             </Label>
-                            <input
+                            <Input
                                 id="status"
                                 type="checkbox"
                                 {...register("status")}

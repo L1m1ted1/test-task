@@ -26,7 +26,6 @@ const todoSchema = z.object({
 
 type TodoFormValues = z.infer<typeof todoSchema>
 
-
 export function CreateTodoDialog() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -39,15 +38,15 @@ export function CreateTodoDialog() {
     } = useForm<TodoFormValues>({
         resolver: zodResolver(todoSchema),
         defaultValues: {
-            name: "Pedro Duarte",
-            description: "@peduarte",
-            status: true,
+            name: "name",
+            description: "description",
+            status: false,
         },
     })
 
     const dispatch = useAppDispatch()
     const invoices = useAppSelector(state => state.todo)
-    let id = invoices.length +1
+    const id = invoices.length +1
     const onSubmit = (data: TodoFormValues) => {
 
         dispatch(todoActions.addTodo({id, ...data}))

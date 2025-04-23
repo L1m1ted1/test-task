@@ -2,9 +2,9 @@ import {createSlice ,PayloadAction } from "@reduxjs/toolkit";
 
 export interface Todo {
     id: number;
-    name: string;
-    description: string;
-    status: boolean;
+    name?: string;
+    description?: string;
+    status?: boolean;
 }
 
 
@@ -12,27 +12,27 @@ const initialState: Todo[] = [
     {
         id: 1,
         name: "INV001",
-        description: "Paid",
+        description: "one",
         status: false,
     },    {
         id: 2,
-        name: "INV001",
-        description: "Paid",
+        name: "INV2",
+        description: "two",
         status: true,
     },    {
         id: 3,
-        name: "INV001",
-        description: "Paid",
+        name: "INV003",
+        description: "three",
         status: true,
     },    {
         id: 4,
-        name: "INV001",
-        description: "Paid",
+        name: "INV004",
+        description: "four",
         status: true,
     },    {
         id: 5,
-        name: "INV001",
-        description: "Paid",
+        name: "INV0051",
+        description: "fivr",
         status: true,
     },
 
