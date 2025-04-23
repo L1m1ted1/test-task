@@ -45,9 +45,16 @@ interface ISelectedState {
 export function TodoTable() {
     const dispatch = useAppDispatch()
     const invoices = useAppSelector(state => state.todo)
+    const [sortCompletedFirst, setSortCompletedFirst] = useState(true);
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [selectedTodo, setSelectedTodo] = useState<ISelectedState>(null)
+
+    const sortedTodos = [...invoices].sort((a, b) => {
+        return sortCompletedFirst
+            ? Number(b.status) - Number(a.status)
+            : Number(a.status) - Number(b.status);
+    });
 
     const {
         register,
@@ -77,11 +84,11 @@ export function TodoTable() {
                     <TableRow>
                         <TableHead className="w-[100px]">Name</TableHead>
                         <TableHead>Description</TableHead>
-                        <TableHead>Status</TableHead>
+                        <TableHead onClick={() => setSortCompletedFirst((prev) => !prev)}>Status</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {invoices.map((invoice) => (
+                    {sortedTodos.map((invoice) => (
                         <TableRow key={invoice.id} >
                             <TableCell className="font-medium">{invoice.name}</TableCell>
                             <TableCell>{invoice.description}</TableCell>

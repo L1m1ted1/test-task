@@ -75,7 +75,6 @@ export function CreateTodoDialog() {
                             id="name"
                             {...register("name")}
                             className="col-span-3"
-                            error={errors.name?.message}
                         />
                         {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                     </div>
@@ -88,7 +87,6 @@ export function CreateTodoDialog() {
                             id="description"
                             {...register("description")}
                             className="col-span-3"
-                            error={errors.description?.message}
                         />
                         {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
                     </div>
